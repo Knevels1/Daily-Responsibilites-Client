@@ -35,7 +35,7 @@ export const Register = (props) => {
                 .then(res => res.json())
                 .then(res => {
                     if ("token" in res) {
-                        localStorage.setItem("lu_token", res.token)
+                        localStorage.setItem("Task_user", res.token)
                         props.history.push("/")
                     }
                 })
@@ -76,7 +76,7 @@ export const Register = (props) => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="verifyPassword"> Verify Password </label>
-                    <textarea ref={bio} name="bio" className="form-control" placeholder="Let other gamers know a little bit about you..." />
+                    <textarea ref={bio} name="bio" className="form-control" placeholder="Verify password" />
                 </fieldset>
                 <fieldset style={{
                     textAlign: "center"
