@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { TaskContext } from "./TaskProvider"
 import "./Task.css"
 export const Task = ({ task }) => {
-    const { completeTask } = useContext(TaskContext)
+    const { completeTask, destroyTask } = useContext(TaskContext)
 
 
     if (task.complete == true) {
@@ -13,7 +13,9 @@ export const Task = ({ task }) => {
                 <div className="task__title">Title: {task.title}</div>
                 <div className="task__content">Content: {task.content}</div>
                 <div className="task__creationDate">Creation Date: {task.task_date}</div>
-                <Button variant="outline-danger"> Delete </Button>
+                <Button variant="outline-danger" onClick={() => {
+                    destroyTask(task.id)
+                }}> Delete </Button>
             </section >
         )
     } else return (
@@ -27,7 +29,9 @@ export const Task = ({ task }) => {
             <Link key={task.id} id={task.id} to={{ pathname: `/create/${task.id}`, state: { selectedTask: task } }} >
                 <Button variant="outline-warning"> Edit Task </Button>
             </Link>
-            <Button variant="outline-danger"> Delete </Button>
+            <Button variant="outline-danger" onClick={() => {
+                destroyTask(task.id)
+            }}> Delete </Button>
         </section>
     )
 }

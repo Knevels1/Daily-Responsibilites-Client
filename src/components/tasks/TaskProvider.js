@@ -49,8 +49,17 @@ export const TaskProvider = (props) => {
         })
             .then(getTasks)
     }
+    const destroyTask = id => {
+        return fetch(`http://localhost:8000/tasks/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("Task_user")}`
+              }
+        })
+        .then(getTasks)
+    }
     return (
-        <TaskContext.Provider value={{tasks, setTasks, getTasks, completeTask, addTask, updateTask}}>
+        <TaskContext.Provider value={{tasks, setTasks, getTasks, completeTask, addTask, updateTask, destroyTask}}>
             {props.children}
         </TaskContext.Provider>
     )
