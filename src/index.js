@@ -4,6 +4,7 @@ import './index.css';
 import { BrowserRouter as Router } from "react-router-dom";
 import {DailyTasks} from './DailyTask';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 ReactDOM.render(
   <React.StrictMode>
