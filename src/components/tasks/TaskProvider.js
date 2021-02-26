@@ -15,8 +15,42 @@ export const TaskProvider = (props) => {
         .then(r => r.json())
         .then(setTasks)
     }
+    const addTask = newTask => {
+        return fetch("http://localhost:8000/tasks", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("Task_user")}`
+            },
+            body: JSON.stringify(newTask)
+        })
+            .then(newTask)
+    }
+    const completeTask = id => {
+        return fetch(`http://localhost:8000/tasks/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("Task_user")}`,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({"complete": true})
+        })
+        .then(getTasks)
+    }
+    const updateTask=(updatedTask)=>{
+        return fetch(`http://localhost:8000/tasks/${updatedTask.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${localStorage.getItem("Task_user")}`
+            },
+            body: JSON.stringify(updatedTask)
+        })
+            .then(getTasks)
+    }
     return (
-        <TaskContext.Provider value={{tasks, setTasks, getTasks}}>
+        <TaskContext.Provider value={{tasks, setTasks, getTasks, completeTask, addTask, updateTask}}>
             {props.children}
         </TaskContext.Provider>
     )

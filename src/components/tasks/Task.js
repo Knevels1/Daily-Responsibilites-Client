@@ -1,13 +1,33 @@
-import React from "react"
+import React, { useContext } from "react"
+import Button from "react-bootstrap/Button"
+import { Link } from "react-router-dom"
+import { TaskContext } from "./TaskProvider"
 import "./Task.css"
-import  Button  from "react-bootstrap/Button"
-export const Task = ({ task }) => (
-    < section key={`task--${task.id}`} className="taskCard" >
-        <div className="task__title">Title: {task.title}</div>
-        <div className="task__content">Content: {task.content}</div>
-        <div className="task__creationDate">Creation Date: {task.task_date}</div>
-        <Button variant="outline-success"> Completed </Button>
-        <Button variant="outline-warning"> Edit Task </Button>
-        <Button variant="outline-danger"> Delete </Button>
-    </section >
-)
+export const Task = ({ task }) => {
+    const { completeTask } = useContext(TaskContext)
+
+
+    if (task.complete == true) {
+        return (
+            < section key={`task--${task.id}`} className="taskCard" >
+                <div className="task__title">Title: {task.title}</div>
+                <div className="task__content">Content: {task.content}</div>
+                <div className="task__creationDate">Creation Date: {task.task_date}</div>
+                <Button variant="outline-danger"> Delete </Button>
+            </section >
+        )
+    } else return (
+        <section key={`task--${task.id}`} className="taskCard" >
+            <div className="task__title">Title: {task.title}</div>
+            <div className="task__content">Content: {task.content}</div>
+            <div className="task__creationDate">Creation Date: {task.task_date}</div>
+            <Button variant="outline-success" onClick={() => {
+                completeTask(task.id)
+            }}> Completed </Button>
+            <Link key={task.id} id={task.id} to={{ pathname: `/create/${task.id}`, state: { selectedTask: task } }} >
+                <Button variant="outline-warning"> Edit Task </Button>
+            </Link>
+            <Button variant="outline-danger"> Delete </Button>
+        </section>
+    )
+}
